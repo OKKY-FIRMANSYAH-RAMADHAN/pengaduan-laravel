@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
@@ -19,19 +20,23 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
+Route::post('login/auth', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
+Route::post('register/auth', [AuthController::class, 'register'])->name('auth.register');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan');
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('user.nonverif');
     Route::get('/akun-saya', [UserController::class, 'akun'])->name('akun');
+});
 
-    // // Identitas
-    // Route::controller(IdentitasController::class)->prefix('/identitas')->group(function () {
-    //     Route::get('/', 'index')->name('administrator.identitas');
-    //     Route::put('/', 'update');
-    //     Route::post('/', 'store');
-    // });
+Route::prefix('user')->middleware('user')->group(function () {
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.user');
+    // Route::get('/user', [UserController::class, 'index'])->name('user');
+    // Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('user.nonverif');
+    // Route::get('/akun-saya', [UserController::class, 'akun'])->name('akun');
 });
