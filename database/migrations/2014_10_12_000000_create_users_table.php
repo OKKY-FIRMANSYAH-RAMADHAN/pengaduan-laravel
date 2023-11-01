@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username', 50);
             $table->string('email_user', 255);
             $table->string('password_user');
-            $table->string('foto_user');
+            $table->string('foto_user')->nullable();;
             $table->string('identitas_user');
             $table->integer('role_user')->default(0);
             $table->integer('status_user')->default(0);
