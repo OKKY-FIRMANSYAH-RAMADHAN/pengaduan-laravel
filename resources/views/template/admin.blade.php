@@ -73,47 +73,63 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
+                        @if (session()->has('login.admin'))
+                            <li class="sidebar-item {{ Route::currentRouteName() === 'admin.dashboard' ? 'active' : '' }}">
+                                <a href="/admin" class="sidebar-link">
+                                    <i class="bi bi-list-task"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }}">
-                            <a href="/admin" class="sidebar-link">
-                                <i class="bi bi-list-task"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item {{ Route::currentRouteName() === 'admin.pengaduan' ? 'active' : '' }}">
+                                <a href="/admin/pengaduan" class="sidebar-link">
+                                    <i class="bi bi-stack"></i>
+                                    <span>Daftar Pengaduan</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item {{ Route::currentRouteName() === 'pengaduan' ? 'active' : '' }}">
-                            <a href="/admin/pengaduan" class="sidebar-link">
-                                <i class="bi bi-stack"></i>
-                                <span>Daftar Pengaduan</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item has-sub {{ Route::currentRouteName() === 'admin.user' || Route::currentRouteName() === 'admin.user.nonverif' ? 'active' : '' }}">
+                                <a href="#" class="sidebar-link">
+                                    <i class="bi bi-people-fill"></i>
+                                    <span>Daftar User</span>
+                                </a>
 
-                        <li class="sidebar-item has-sub {{ Route::currentRouteName() === 'user' || Route::currentRouteName() === 'user.nonverif' ? 'active' : '' }}">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-people-fill"></i>
-                                <span>Daftar User</span>
-                            </a>
+                                <ul class="submenu">
+                                    <li class="submenu-item {{ Route::currentRouteName() === 'admin.user' ? 'active' : '' }}">
+                                        <a href="/admin/user" class="submenu-link">Semua User</a>
+                                    </li>
 
-                            <ul class="submenu">
-                                <li class="submenu-item {{ Route::currentRouteName() === 'user' ? 'active' : '' }}">
-                                    <a href="/admin/user" class="submenu-link">Semua User</a>
-                                </li>
+                                    <li class="submenu-item {{ Route::currentRouteName() === 'admin.user.nonverif' ? 'active' : '' }}">
+                                        <a href="/admin/user/nonverif" class="submenu-link">Belum Terverifikasi</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                                <li class="submenu-item {{ Route::currentRouteName() === 'user.nonverif' ? 'active' : '' }}">
-                                    <a href="/admin/user/nonverif" class="submenu-link">Belum Terverifikasi</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li class="sidebar-item {{ Route::currentRouteName() === 'admin.akun' || Route::currentRouteName() === 'user' ? 'active' : '' }}">
+                                <a href="/admin/akun-saya" class="sidebar-link">
+                                    <i class="bi bi-person-circle"></i>
+                                    <span>Akun Saya</span>
+                                </a>
+                            </li>    
 
-                        <li class="sidebar-item {{ Route::currentRouteName() === 'akun' ? 'active' : '' }}">
-                            <a href="/admin/akun-saya" class="sidebar-link">
-                                <i class="bi bi-person-circle"></i>
-                                <span>Akun Saya</span>
-                            </a>
-                        </li>
+                        @elseif(session()->has('login.user'))
+                            <li class="sidebar-item {{ Route::currentRouteName() === 'user.pengaduan' ? 'active' : '' }}">
+                                <a href="/user/pengaduan" class="sidebar-link">
+                                    <i class="bi bi-stack"></i>
+                                    <span>Daftar Pengaduan</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item {{ Route::currentRouteName() === 'user.akun' || Route::currentRouteName() === 'user' ? 'active' : '' }}">
+                                <a href="/user/akun-saya" class="sidebar-link">
+                                    <i class="bi bi-person-circle"></i>
+                                    <span>Akun Saya</span>
+                                </a>
+                            </li> 
+                        @endif
 
                         <li class="sidebar-item">
-                            <a href="index.html" class="sidebar-link">
+                            <a href="/logout" class="sidebar-link">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Keluar</span>
                             </a>

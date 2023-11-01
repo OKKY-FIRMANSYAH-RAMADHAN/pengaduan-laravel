@@ -27,16 +27,14 @@ Route::post('register/auth', [AuthController::class, 'register'])->name('auth.re
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->middleware('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan');
-    Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('user.nonverif');
-    Route::get('/akun-saya', [UserController::class, 'akun'])->name('akun');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('admin.pengaduan');
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('admin.user.nonverif');
+    Route::get('/akun-saya', [UserController::class, 'akun'])->name('admin.akun');
 });
 
 Route::prefix('user')->middleware('user')->group(function () {
-    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.user');
-    // Route::get('/user', [UserController::class, 'index'])->name('user');
-    // Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('user.nonverif');
-    // Route::get('/akun-saya', [UserController::class, 'akun'])->name('akun');
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('user.pengaduan');
+    Route::get('/akun-saya', [UserController::class, 'akun'])->name('user.akun');
 });

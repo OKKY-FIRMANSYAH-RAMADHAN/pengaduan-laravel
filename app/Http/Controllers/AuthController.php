@@ -14,9 +14,9 @@ class AuthController extends Controller
     {
         if (session()->has('id_user')) {
             if (session()->has('login.user')) {
-                return redirect()->route('pengaduan.user');
+                return redirect()->route('user.pengaduan');
             } else {
-                return redirect()->route('dashboard');
+                return redirect()->route('admin.dashboard');
             }
         } else {
             return view('login');
@@ -27,9 +27,9 @@ class AuthController extends Controller
     {
         if (session()->has('id_user')) {
             if (session()->has('login.user')) {
-                return redirect()->route('pengaduan.user');
+                return redirect()->route('user.pengaduan');
             } else {
-                return redirect()->route('dashboard');
+                return redirect()->route('admin.dashboard');
             }
         } else {
             return view('register');
