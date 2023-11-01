@@ -76,6 +76,7 @@ class AuthController extends Controller
             $user->nama_user = $request->nama_user;
             $user->username = $request->username;
             $user->email_user = $request->email_user;
+            $user->foto_user = rand(1, 7) . '.jpg';
             $user->password_user = Hash::make($request->password_user);
             $user->save();
 
