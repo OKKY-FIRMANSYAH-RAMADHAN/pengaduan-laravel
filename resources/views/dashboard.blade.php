@@ -106,50 +106,21 @@
         </div>
         <div class="col-12 col-lg-3">
             <div class="card">
-                <div class="card-body py-4 px-4">
-                    <div class="d-flex align-items-center">
-                        <div class="avatar avatar-xl">
-                            <img src="{{ asset('/assets') }}/compiled/jpg/1.jpg" alt="Face 1" />
-                        </div>
-                        <div class="ms-3 name">
-                            <h5 class="font-bold">John Duck</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
                 <div class="card-header">
                     <h4>Permintaan Verifikasi</h4>
                 </div>
                 <div class="card-content pb-4">
-                    <div class="recent-message d-flex px-4 py-3">
-                        <div class="avatar avatar-lg">
-                            <img src="./assets/compiled/jpg/4.jpg" />
+                    @foreach ($user_nonverif as $data)
+                        <div class="recent-message d-flex px-4 py-3">
+                            <div class="avatar avatar-lg">
+                                <img src="{{ asset('assets') }}/uploads/foto_user/{{ $data['foto_user'] }}" />
+                            </div>
+                            <div class="name ms-4">
+                                <h5 class="mb-1">{{ $data['nama_user'] }}</h5>
+                                <h6 class="text-muted mb-0">@<?= $data['username'] ?></h6>
+                            </div>
                         </div>
-                        <div class="name ms-4">
-                            <h5 class="mb-1">Hank Schrader</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
-                        </div>
-                    </div>
-                    <div class="recent-message d-flex px-4 py-3">
-                        <div class="avatar avatar-lg">
-                            <img src="./assets/compiled/jpg/5.jpg" />
-                        </div>
-                        <div class="name ms-4">
-                            <h5 class="mb-1">Dean Winchester</h5>
-                            <h6 class="text-muted mb-0">@imdean</h6>
-                        </div>
-                    </div>
-                    <div class="recent-message d-flex px-4 py-3">
-                        <div class="avatar avatar-lg">
-                            <img src="./assets/compiled/jpg/1.jpg" />
-                        </div>
-                        <div class="name ms-4">
-                            <h5 class="mb-1">John Dodol</h5>
-                            <h6 class="text-muted mb-0">@dodoljohn</h6>
-                        </div>
-                    </div>
+                    @endforeach
                     <div class="px-4">
                         <a class="btn btn-block btn-sm btn-outline-primary font-bold mt-3" href="">List Verifikasi</a>
                     </div>
