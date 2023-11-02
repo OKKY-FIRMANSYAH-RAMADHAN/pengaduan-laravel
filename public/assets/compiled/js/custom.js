@@ -1,10 +1,46 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Fungsi Tanggal
     function formatTanggal(tanggalString) {
         const options = { day: "numeric", month: "long", year: "numeric" };
         const tanggal = new Date(tanggalString);
         return tanggal.toLocaleDateString("id-ID", options);
     }
 
+    // Membuat Pengaduan
+    $("#submitPengaduan").click(function (event) {
+        event.preventDefault();
+        var formData = new FormData($("#form-tambah-pengaduan")[0]);
+        $.ajax({
+            url: "/user/pengaduan/insert",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status === "success") {
+                    Swal.fire({
+                        title: "Sukses!",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    });
+                    $("#buatPengaduan").modal("hide");
+                    const form = document.getElementById(
+                        "form-tambah-pengaduan"
+                    );
+                    form.reset();
+                    var imageContainer = $("#imageContainer");
+                    imageContainer.empty();
+                }
+            },
+        });
+    });
+
+    // Detail Pengaduan
     $(document).on("click", "#tombolDetail", function () {
         var kode = $(this).attr("data-kode");
         var currentPath = window.location.pathname;
@@ -59,14 +95,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Hapus Pengaduan
     $(document).on("click", "#tombolHapus", function () {
         var kode = $(this).attr("data-kode");
         var currentPath = window.location.pathname;
 
-        console.log(currentPath + "/delete/" + kode);
-
         Swal.fire({
-            title: "Yakin Ingin Menghapus User ?",
+            title: "Yakin Ingin Menghapus Pengaduan ?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -103,6 +138,53 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
                 });
             }
+        });
+    });
+
+    // Filter Data
+    $(document).on("change", "#filterData", function () {
+        var status = $("#byStatus").val();
+        var month = $("#byMonth").val();
+        var range = $('input[name="byRange"]').val();
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+
+        $.ajax({
+            type: "POST",
+            url: `${window.location.pathname}/filter-pengaduan`,
+            data: {
+                _token: token,
+                status: status,
+                month: month,
+                range: range,
+            },
+            success: function (data) {
+                $("#table1 tbody").html(data);
+            },
+            error: function (data) {
+                console.log("Error:", data);
+            },
+        });
+    });
+
+    $(document).on("click", "#tombolReset", function () {
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+
+        $.ajax({
+            type: "POST",
+            url: `${window.location.pathname}/filter-pengaduan`,
+            data: {
+                _token: token,
+            },
+            success: function (data) {
+                $("#table1 tbody").html(data);
+            },
+            error: function (data) {
+                console.log("Error:", data);
+            },
         });
     });
 
@@ -227,38 +309,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
             reader.readAsDataURL(files[i]);
         }
-    });
-
-    $("#submitPengaduan").click(function (event) {
-        event.preventDefault();
-        var formData = new FormData($("#form-tambah-pengaduan")[0]);
-        $.ajax({
-            url: "/user/pengaduan/insert",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                if (data.status === "success") {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: data.message,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
-                    $("#buatPengaduan").modal("hide");
-                    const form = document.getElementById(
-                        "form-tambah-pengaduan"
-                    );
-                    form.reset();
-                    var imageContainer = $("#imageContainer");
-                    imageContainer.empty();
-                }
-            },
-        });
     });
 });

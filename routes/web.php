@@ -38,6 +38,7 @@ Route::prefix('user')->middleware('user')->group(function () {
 
     // Pengaduan
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('user.pengaduan');
+    Route::post('/pengaduan/filter-pengaduan', [PengaduanController::class, 'filterPengaduan']);
     Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'detail']);
     Route::post('/pengaduan/insert', [PengaduanController::class, 'store'])->name('user.insert.pengaduan');
     Route::get('/pengaduan/delete/{id}', [PengaduanController::class, 'destroy']);

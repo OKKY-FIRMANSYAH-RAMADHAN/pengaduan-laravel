@@ -7,36 +7,42 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            Filter :
-                            <div class="row mt-2">
-                                <div class="col-12 col-md-4">
-                                    <fieldset class="form-group">
-                                        <select class="form-select" id="basicSelect">
-                                            <option disabled selected>Berdasarkan Status</option>
-                                            <option>Belum Diproses</option>
-                                            <option>Diproses</option>
-                                            <option>Selesai</option>
-                                        </select>
-                                    </fieldset>
+                            <form id="filterData" method="POST">
+                                @csrf
+                                Filter :
+                                <div class="row mt-2">
+                                    <div class="col-12 col-md-3 col-lg-3">
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="byStatus" name="byStatus">
+                                                <option disabled selected>Status</option>
+                                                <option value="0">Belum Diproses</option>
+                                                <option value="1">Diproses</option>
+                                                <option value="2">Selesai</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 col-md-3 col-lg-4">
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="byMonth" name="byMonth">
+                                                <option disabled selected>Bulan</option>
+                                                @foreach (range(1, 12) as $month)
+                                                    <option value="{{ $month }}">
+                                                        {{ date('F', mktime(0, 0, 0, $month, 1)) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <fieldset class="form-group">
+                                            <input type="date" class="form-control flatpickr-range mb-3"
+                                                placeholder="Rentang Waktu" name="byRange">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 col-md-1 col-lg-1">
+                                        <button type="reset" class="btn btn-danger rounded-pill" id="tombolReset">Reset</button>
+                                    </div>   
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <fieldset class="form-group">
-                                        <select class="form-select" id="basicSelect">
-                                            <option disabled selected>Berdasarkan Bulan</option>
-                                            @foreach (range(1, 12) as $month)
-                                                <option value="{{ $month }}">
-                                                    {{ date('F', mktime(0, 0, 0, $month, 1)) }}</option>
-                                            @endforeach
-                                        </select>
-                                    </fieldset>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <fieldset class="form-group">
-                                        <input type="date" class="form-control flatpickr-range mb-3"
-                                            placeholder="Berdasarkan Rentang Waktu">
-                                    </fieldset>
-                                </div>
-                            </div>
+                            </form>
                             @if (session()->has('login.user'))
                                 <div class="col-12 d-flex justify-content-end">
                                     <button class="btn btn-primary" id="tombolBuat">Buat Pengaduan</button>
@@ -56,35 +62,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pengaduan as $data)
-                                            <tr>
-                                                <td>1</td>
-                                                <td>{{ date('d F Y', strtotime($data['created_at'])) }}</td>
-                                                <td>{{ $data['tentang_pengaduan'] }}</td>
-                                                @if (session()->has('login.user'))
-                                                    @if ($data['status_pengaduan'] == 0)
-                                                        <td><button class="btn btn-sm btn-secondary">Belum Diproses</button></td>
-                                                        <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0"
-                                                                data-kode="{{ $data['id_pengaduan'] }}"
-                                                                id="tombolDetail">Detail</button>
-                                                            <button class="btn btn-sm btn-danger mt-2 mt-lg-0 mt-md-0"
-                                                                data-kode="{{ $data['id_pengaduan'] }}" id="tombolHapus">Hapus</button>
-                                                        </td>
-                                                    @elseif($data['status_pengaduan'] == 1)
-                                                        <td><button class="btn btn-sm btn-warning">Diproses</button></td>
-                                                        <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0"
-                                                                data-kode="{{ $data['id_pengaduan'] }}"
-                                                                id="tombolDetail">Detail</button>
-                                                        </td>
-                                                    @elseif($data['status_pengaduan'] == 2)
-                                                        <td><button class="btn btn-sm btn-success">Selesai</button></td>
-                                                        <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0"
-                                                                data-kode="{{ $data['id_pengaduan'] }}"
-                                                                id="tombolDetail">Detail</button></td>
-                                                    @endif
-                                                @endif
-                                            </tr>
-                                        @endforeach
+                                        @include('section.pengaduan_list')
                                     </tbody>
                                 </table>
                             </div>

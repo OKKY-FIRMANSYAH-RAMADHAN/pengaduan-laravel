@@ -58,12 +58,39 @@ class PengaduanController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pengaduan $pengaduan)
+
+    public function filterPengaduan(Request $request)
     {
-        //
+        if (session()->has('login.user')) {
+            $pengaduanQuery = Pengaduan::where('id_pengadu', session('id_user'));
+
+            if ($request->has('status') && !is_null($request->status)) {
+                $pengaduanQuery->where('status_pengaduan', $request->status);
+            }
+
+            if ($request->has('month') && !is_null($request->month)) {
+                $pengaduanQuery->whereMonth('created_at', $request->month);
+            }
+
+            if ($request->has('range') && !is_null($request->range)) {
+                $dateRange = explode(' to ', $request->range);
+
+                if (isset($dateRange[1])) {
+                    $startDate = date('Y-m-d 00:00:01', strtotime($dateRange[0]));
+                    $endDate = date('Y-m-d 23:59:59', strtotime($dateRange[1]));
+                    $pengaduanQuery->whereBetween('created_at', [$startDate, $endDate]);
+                } else {
+                    $selectedDate = date('Y-m-d', strtotime($dateRange[0]));
+                    $startDate = $selectedDate . ' 00:00:01';
+                    $endDate = $selectedDate . ' 23:59:59';
+                    $pengaduanQuery->whereBetween('created_at', [$startDate, $endDate]);
+                }
+            }
+
+            $data['pengaduan'] = $pengaduanQuery->orderByDesc('created_at')->get();
+        }
+
+        return view('section.pengaduan_list', $data);
     }
 
     /**
