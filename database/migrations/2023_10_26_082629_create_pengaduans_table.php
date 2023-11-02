@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('pengaduan', function (Blueprint $table) {
             $table->ulid('id_pengaduan')->primary();
+            $table->ulid('id_pengadu')->nullable();
+            $table->foreign('id_pengadu')->references('id_user')->on('user')->onDelete('cascade')->nullable();
             $table->string('nama_pengadu', 100);
             $table->string('tentang_pengaduan', 100);
             $table->text('deskripsi_pengaduan');

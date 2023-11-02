@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('foto_pengaduan', function (Blueprint $table) {
             $table->ulid('id_foto')->primary();
+            $table->ulid('id_pengaduan');
+            $table->foreign('id_pengaduan')->references('id_pengaduan')->on('pengaduan')->onDelete('cascade');
             $table->string('nama_foto');
             $table->timestamps();
         });
