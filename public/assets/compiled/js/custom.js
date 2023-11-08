@@ -271,6 +271,33 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         reader.readAsDataURL(selectedFile);
+        var formData = new FormData($("#ubahGambar")[0]);
+
+        $.ajax({
+            url: "changeimage",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status === "success") {
+                    Swal.fire({
+                        title: "Sukses!",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    });
+                }else{
+                    Swal.fire({
+                        title: "Error!",
+                        text: data.message,
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                }
+            },
+        });
+
     });
 
     $(document).on("click", "#tombolBuat", function () {
@@ -284,6 +311,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (files.length > maxFiles) {
             Swal.fire("Error!", "Maksimal Hanya 6 Foto", "error");
             $(this).val("");
+            imageContainer.empty();
             return false;
         }
 
@@ -310,4 +338,69 @@ document.addEventListener("DOMContentLoaded", function () {
             reader.readAsDataURL(files[i]);
         }
     });
+
+    $(document).on("click", "#submitDetail", function (event) {
+        event.preventDefault();
+        var formData = new FormData($("#form-update-user")[0]);
+        $.ajax({
+            url: "update-user",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status === "success") {
+                    Swal.fire({
+                        title: "Sukses!",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            },
+        });
+    });
+
+    $(document).on("click", "#submitChangePassword", function (event) {
+        event.preventDefault();
+        var formData = new FormData($("#form-ganti-password")[0]);
+        $.ajax({
+            url: "ganti-password",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status === "success") {
+                    Swal.fire({
+                        title: "Sukses!",
+                        text: data.message, 
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const form = document.getElementById(
+                                "form-ganti-password"
+                            );
+                            form.reset();
+                            $("#modalGantiPassword").modal("hide");
+                        }
+                    });
+                    
+                }else{
+                    Swal.fire({
+                        title: "Error!",
+                        text: data.message,
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                }
+            },
+        });
+    });
+
 });

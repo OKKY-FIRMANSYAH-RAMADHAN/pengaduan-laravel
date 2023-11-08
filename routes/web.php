@@ -26,6 +26,8 @@ Route::get('/register', [AuthController::class, 'viewRegister'])->name('register
 Route::post('register/auth', [AuthController::class, 'register'])->name('auth.register');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+
+
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('admin.pengaduan');
@@ -42,6 +44,8 @@ Route::prefix('user')->middleware('user')->group(function () {
     Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'detail']);
     Route::post('/pengaduan/insert', [PengaduanController::class, 'store'])->name('user.insert.pengaduan');
     Route::get('/pengaduan/delete/{id}', [PengaduanController::class, 'destroy']);
-
     Route::get('/akun-saya', [UserController::class, 'akun'])->name('user.akun');
+    Route::post('changeimage', [UserController::class, 'updateGambar']);
+    Route::post('update-user', [UserController::class, 'update']);
+    Route::post('ganti-password', [UserController::class, 'gantiPassword']);
 });

@@ -12,12 +12,22 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column">
                                     <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('/assets') }}/compiled/jpg/2.jpg" alt="Avatar" id="gambarAwal">
+                                        <img src="{{ asset('/assets') }}/uploads/foto_user/{{$user->foto_user}}" alt="Avatar" id="gambarAwal">
                                     </div>
-                                    <input type="file" id="fileInput" style="display: none;">
+                                    <form id="ubahGambar" enctype="multipart/form-data" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id_user" value="{{$user['id_user']}}">
+                                        <input type="file" name="gambarBaru" id="fileInput" style="display: none;">
+                                    </form>
                                     <a class="mt-3" href="javascript:void(0);" id="gantiGambar">Ganti Gambar</a>
-                                    <h3 class="mt-3">John Doe</h3>
-                                    <p class="text-small">Junior Software Engineer</p>
+                                    <h3 class="mt-3">{{$user['nama_user']}}</h3>
+                                    <p class="text-small">
+                                        @if ($user['role_user'] == 1)
+                                            User
+                                        @else
+                                            Administrator
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -25,24 +35,26 @@
                     <div class="col-12 col-lg-8">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#" method="get">
+                                <form id="form-update-user" method="post">
+                                    @csrf
                                     <div class="form-group">
                                         <label for="name" class="form-label">Nama</label>
-                                        <input type="text" name="name" id="nama" class="form-control">
+                                        <input type="text" name="nama_user" id="nama" class="form-control" value="{{$user['nama_user']}}" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="form-label">Username</label>
-                                        <input type="text" name="text" id="username" class="form-control">
+                                        <input type="text" name="username" id="username" class="form-control" value="{{$user['username']}}" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="text" name="email" id="email" class="form-control">
+                                        <input type="text" name="email_user" id="email" class="form-control" value="{{$user['email_user']}}">
                                     </div>
                                     <div class="form-group">
                                         <a href="javascript:void(0);" id="tombolGantiPassword">Ganti Password</a>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <input type="hidden" name="id_user" value="{{$user['id_user']}}">
+                                        <button type="submit" id="submitDetail" class="btn btn-primary">Ubah Data</button>
                                     </div>
                                 </form>
                             </div>
@@ -59,49 +71,51 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form form-vertical">
+                                    <form class="form form-vertical" method="post" id="form-ganti-password">
+                                        @csrf
                                         <div class="form-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group has-icon-left">
-                                                        <label for="password-id-icon">Password Lama</label>
-                                                        <div class="position-relative">
-                                                            <input type="password" class="form-control" placeholder="Password Lama"
-                                                                id="password-id-icon">
-                                                            <div class="form-control-icon">
-                                                                <i class="bi bi-lock"></i>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group has-icon-left">
+                                                            <label for="password-id-icon">Password Lama</label>
+                                                            <div class="position-relative">
+                                                                <input type="password" class="form-control" placeholder="Password Lama"
+                                                                    id="password-id-lama" name="passwordLama">
+                                                                <div class="form-control-icon">
+                                                                    <i class="bi bi-lock"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group has-icon-left">
-                                                        <label for="password-id-icon">Password Baru</label>
-                                                        <div class="position-relative">
-                                                            <input type="password" class="form-control" placeholder="Password Baru"
-                                                                id="password-id-icon">
-                                                            <div class="form-control-icon">
-                                                                <i class="bi bi-lock"></i>
+                                                    <div class="col-12">
+                                                        <div class="form-group has-icon-left">
+                                                            <label for="password-id-icon">Password Baru</label>
+                                                            <div class="position-relative">
+                                                                <input type="password" class="form-control" placeholder="Password Baru"
+                                                                    id="password-id-baru" name="passwordBaru">
+                                                                <div class="form-control-icon">
+                                                                    <i class="bi bi-lock"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group has-icon-left">
-                                                        <label for="password-id-icon">Konfirmasi Password</label>
-                                                        <div class="position-relative">
-                                                            <input type="password" class="form-control" placeholder="Konfirmasi Password"
-                                                                id="password-id-icon">
-                                                            <div class="form-control-icon">
-                                                                <i class="bi bi-lock"></i>
+                                                    <div class="col-12">
+                                                        <div class="form-group has-icon-left">
+                                                            <label for="password-id-icon">Konfirmasi Password</label>
+                                                            <div class="position-relative">
+                                                                <input type="password" class="form-control" placeholder="Konfirmasi Password"
+                                                                    id="password-id-konfirmasi" name="passwordKonfirmasi">
+                                                                <div class="form-control-icon">
+                                                                    <i class="bi bi-lock"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <input type="hidden" name="id_user" value="{{$user['id_user']}}">
+                                                        <button type="submit" id="submitChangePassword" class="btn btn-primary me-1 mb-1">Ganti Password</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 d-flex justify-content-end">
-                                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                                </div>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>
