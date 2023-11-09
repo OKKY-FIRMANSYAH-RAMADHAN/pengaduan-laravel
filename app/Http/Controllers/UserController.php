@@ -16,12 +16,20 @@ class UserController extends Controller
      */
     public function index()
     {
+        $data['user'] = User::where('status_user',1)->whereNotIn('id_user', [session('id_user')])->get();
         $data['judul'] = "Daftar User";
         return view('user', $data);
     }
 
+    public function detail($id)
+    {
+        $data = User::where('id_user', $id)->get();
+        return response()->json($data);
+    }
+
     public function userNonverif()
     {
+        $data['user'] = User::where('status_user',0)->get();
         $data['judul'] = "Daftar User Belum Verifikasi";
         return view('usernonverif', $data);
     }
@@ -76,25 +84,6 @@ class UserController extends Controller
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function gantiPassword(Request $request)
     {
         $user = User::find($request->id_user);
@@ -122,9 +111,6 @@ class UserController extends Controller
         return response()->json($pesan)->header('Content-Type', 'application/json');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
         $user = User::find($request->id_user);
@@ -146,11 +132,45 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function verifikasi($id)
     {
-        //
+        $user = User::find($id);
+        $user->status_user = 1;
+        $user->save();
+
+        if ($user) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil Menyetujui User.'
+            ])->header('Content-Type', 'application/json');
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal Menyetujui User.'
+            ])->header('Content-Type', 'application/json');
+        }
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $foto_default = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg');
+            if (!in_array($user['foto_user'], $foto_default)) {
+                File::delete('assets/uploads/foto_user/'.$user['foto_user']);
+            }
+            File::delete('assets/uploads/identitas/'.$user['identitas_user']);
+            User::destroy($id);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil Menghapus User.'
+            ])->header('Content-Type', 'application/json');
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal Menghapus User.'
+            ])->header('Content-Type', 'application/json');
+        }
     }
 }

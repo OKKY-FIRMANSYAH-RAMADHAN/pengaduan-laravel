@@ -190,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $(document).on("click", "#tombolProses", function () {
         var kode = $(this).attr("data-kode");
+        var currentPath = window.location.pathname;
         Swal.fire({
             title: "Yakin Ingin Memproses ?",
             icon: "warning",
@@ -199,17 +200,41 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmButtonText: "Ya, Proses",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    "Berhasil!",
-                    "Pengaduan ini sedang di proses",
-                    "success"
-                );
+                $.ajax({
+                    url: currentPath + "/proses/" + kode,
+                    type: "GET",
+                    data: JSON,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status === "success") {
+                            Swal.fire({
+                                title: "Sukses!",
+                                text: data.message,
+                                icon: "success",
+                                confirmButtonText: "OK",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: data.message,
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
+                        }
+                    },
+                });
             }
         });
     });
 
     $(document).on("click", "#tombolSelesai", function () {
         var kode = $(this).attr("data-kode");
+        var currentPath = window.location.pathname;
         Swal.fire({
             title: "Yakin Ingin Menyelesaikan Pengaduan ?",
             icon: "warning",
@@ -219,32 +244,41 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmButtonText: "Ya, Selesaikan",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    "Berhasil!",
-                    "Pengaduan ini berhasil diselesaikan",
-                    "success"
-                );
-            }
-        });
-    });
-
-    $(document).on("click", "#tombolSetuju", function () {
-        var kode = $(this).attr("data-kode");
-        Swal.fire({
-            title: "Yakin Ingin Menyetujui ?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, Sejutu",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Berhasil!", "User berhasil disetujui", "success");
+                $.ajax({
+                    url: currentPath + "/selesai/" + kode,
+                    type: "GET",
+                    data: JSON,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status === "success") {
+                            Swal.fire({
+                                title: "Sukses!",
+                                text: data.message,
+                                icon: "success",
+                                confirmButtonText: "OK",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: data.message,
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
+                        }
+                    },
+                });
             }
         });
     });
 
     $(document).on("click", "#viewIdentitas", function () {
+        var data = $(this).attr("data-kode");
+        document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${data}`; 
         $("#modalIdentitas").modal("show");
     });
 
@@ -400,6 +434,119 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }
             },
+        });
+    });
+
+    $(document).on("click", "#btnDetailUser", function () {
+        var kode = $(this).attr("data-kode");
+        var currentPath = window.location.pathname;
+        $("#detailUser").modal("show");
+
+        $.ajax({
+            url: currentPath + "/detail/" + kode,
+            type: "GET",
+            data: JSON,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                var dataUser = response[0];
+                document.getElementById("nama_user").innerHTML = dataUser["nama_user"];
+                document.getElementById("username").innerHTML = dataUser["username"];
+                document.getElementById("email_user").innerHTML = dataUser["email_user"];
+                document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${dataUser["identitas_user"]}`;
+                document.getElementById("fotoUser").src = `${window.location.origin}/assets/uploads/foto_user/${dataUser["foto_user"]}`;
+
+                $("#detailUser").modal("show");
+            },
+        });
+    });
+
+    $(document).on("click", "#tombolHapusUser", function () {
+        var kode = $(this).attr("data-kode");
+        var currentPath = window.location.pathname;
+
+        Swal.fire({
+            title: "Yakin Ingin Menghapus User ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Hapus",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: currentPath + "/delete/" + kode,
+                    type: "GET",
+                    data: JSON,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status === "success") {
+                            Swal.fire({
+                                title: "Sukses!",
+                                text: data.message,
+                                icon: "success",
+                                confirmButtonText: "OK",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: data.message,
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("click", "#tombolSetujuUser", function () {
+        var kode = $(this).attr("data-kode");
+        var currentPath = window.location.pathname;
+        Swal.fire({
+            title: "Yakin Ingin Menyetujui ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Sejutu",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: currentPath + "/verifikasi/" + kode,
+                    type: "GET",
+                    data: JSON,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status === "success") {
+                            Swal.fire({
+                                title: "Sukses!",
+                                text: data.message,
+                                icon: "success",
+                                confirmButtonText: "OK",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: data.message,
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
+                        }
+                    },
+                });
+            }
         });
     });
 

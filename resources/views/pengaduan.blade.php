@@ -70,6 +70,7 @@
                     </div>
                 </section>
                 {{-- Buat Pengaduan --}}
+                @if (session()->has('login.user'))
                 <div class="modal fade text-left w-100 none" id="buatPengaduan" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel16" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
@@ -125,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 {{-- Detail --}}
                 <div class="modal fade text-left w-100 none" id="detailPengaduan" tabindex="-1" role="dialog"

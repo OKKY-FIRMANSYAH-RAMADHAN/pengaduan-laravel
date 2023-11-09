@@ -17,19 +17,20 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        <th>Aksi</th>   
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Okky Firmansyah</td>
-                                        <td>okky@gmail.com</td>
-                                        <td><button class="btn btn-sm btn-success">Aktif</button></td>
-                                        <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0" data-bs-toggle="modal"
-                                            data-bs-target="#detailUser">Detail</button>
-                                            <button class="btn btn-sm btn-danger mt-2 mt-lg-0 mt-md-0" data-kode="1" id="tombolHapus">Hapus</button></td>
-                                    </tr>
+                                    @foreach ($user as $data)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $data['nama_user'] }}</td>
+                                            <td>{{ $data['email_user'] }}</td>
+                                            <td><button class="btn btn-sm btn-success">Aktif</button></td>
+                                            <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0" data-kode="{{ $data['id_user'] }}" id="btnDetailUser">Detail</button>
+                                                <button class="btn btn-sm btn-danger mt-2 mt-lg-0 mt-md-0" data-kode="{{ $data['id_user'] }}" id="tombolHapusUser">Hapus</button></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -50,43 +51,30 @@
                             <div class="row mt-3 text-center">
                                 <div class="col-12">
                                     <div class="avatar avatar-3xl">
-                                        <img src="{{ asset('/assets') }}/compiled/jpg/1.jpg" alt="Face 1" />
+                                        <img src="{{ asset('/assets') }}/compiled/jpg/1.jpg" id="fotoUser" alt="Face 1" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 fw-bold">Nama</div>
                                 <div class="col-md-1 d-none d-md-block">:</div>
-                                <div class="col-md-6">
-                                    Oky Firmansyah
-                                </div>
+                                <div class="col-md-6" id="nama_user"></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 fw-bold">Username</div>
                                 <div class="col-md-1 d-none d-md-block">:</div>
-                                <div class="col-md-6">
-                                    okkyfirman
-                                </div>
+                                <div class="col-md-6" id="username"></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 fw-bold">Email</div>
                                 <div class="col-md-1 d-none d-md-block">:</div>
-                                <div class="col-md-6">
-                                    okky@gmail.com
-                                </div>
+                                <div class="col-md-6" id="email_user"></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 fw-bold">Kartu Identias</div>
                                 <div class="col-md-1 d-none d-md-block">:</div>
                                 <div class="col-md-6">
                                     <a href="javascript:void(0);" id="viewIdentitas">Klik Disini</a>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-4 fw-bold">Aktif Sejak</div>
-                                <div class="col-md-1 d-none d-md-block">:</div>
-                                <div class="col-md-6">
-                                    19 Maret 2023
                                 </div>
                             </div>
                         </div>
@@ -106,7 +94,7 @@
                         <div class="modal-body">
                             <div class="row mt-3 text-center">
                                 <div class="col-12">
-                                    <img src="{{ asset('/assets') }}/img/pararel.png" alt="Face 1" width="400px" />
+                                    <img src="{{ asset('/assets') }}/img/pararel.png" id="fotoIdentitas" alt="Face 1" width="400px" />
                                 </div>
                             </div>
                         </div>

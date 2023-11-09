@@ -30,9 +30,18 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/detail/{id}', [PengaduanController::class, 'detail']);
+    Route::get('pengaduan/proses/{id}', [PengaduanController::class, 'proses']);
+    Route::get('pengaduan/selesai/{id}', [PengaduanController::class, 'selesaikan']);
+    Route::get('/proses/{id}', [PengaduanController::class, 'proses']);
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('admin.pengaduan');
+    Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'detail']);
+    Route::post('/pengaduan/filter-pengaduan', [PengaduanController::class, 'filterPengaduan']);
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('/user/detail/{id}', [UserController::class, 'detail']);
+    Route::get('/user/delete/{id}', [UserController::class, 'destroy']);
     Route::get('/user/nonverif', [UserController::class, 'userNonverif'])->name('admin.user.nonverif');
+    Route::get('/user/nonverif/verifikasi/{id}', [UserController::class, 'verifikasi']);
     Route::get('/akun-saya', [UserController::class, 'akun'])->name('admin.akun');
 });
 
