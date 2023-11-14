@@ -2,240 +2,353 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Mazer Admin Dashboard</title>
-
-    <link rel="shortcut icon" href="{{ asset('/assets') }}/compiled/svg/favicon.svg" type="image/x-icon" />
-    <link rel="shortcut icon"
-        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC"
-        type="image/png" />
-
-    <link rel="stylesheet"
-        href="{{ asset('/assets') }}/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('/assets') }}/compiled/css/table-datatable-jquery.css">
-    <link rel="stylesheet" href="{{ asset('/assets') }}/compiled/css/app.css" />
-    <link rel="stylesheet" href="{{ asset('/assets') }}/compiled/css/app-dark.css" />
-    <link rel="stylesheet" href="{{ asset('/assets') }}/compiled/css/iconly.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An impressive and flawless site template that includes various UI elements and countless features, attractive ready-made blocks and rich pages, basically everything you need to create a unique and professional website.">
+  <meta name="keywords" content="bootstrap 5, business, corporate, creative, gulp, marketing, minimal, modern, multipurpose, one page, responsive, saas, sass, seo, startup, html5 template, site template">
+  <meta name="author" content="elemis">
+  <title>Landing Page - Website Pengaduan</title>
+  <link rel="shortcut icon" href="{{ asset('/assets') }}/img/favicon.png">
+  <link rel="stylesheet" href="{{ asset('/assets') }}/css/plugins.css">
+  <link rel="stylesheet" href="{{ asset('/assets') }}/css/style.css">
+  <link rel="stylesheet" href="{{ asset('/assets') }}/css/colors/purple.css">
+  <link rel="preload" href="{{ asset('/assets') }}/css/fonts/urbanist.css" as="style" onload="this.rel='stylesheet'">
+  <style>
+    section {
+       transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
+ 
+    section.active {
+       transform: translateY(0);
+    }
+ </style>
+ 
+ 
 </head>
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
-    <div id="app">
-        <div id="sidebar">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="index.html"><img src="{{ asset('/assets') }}/compiled/svg/logo.svg" alt="Logo"
-                                    srcset="" /></a>
-                        </div>
-                        <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
-                                height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
-                                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
-                                        opacity=".3"></path>
-                                    <g transform="translate(-210 -1)">
-                                        <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
-                                        <circle cx="220.5" cy="11.5" r="4"></circle>
-                                        <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                            <div class="form-check form-switch fs-6">
-                                <input class="form-check-input me-0" type="checkbox" id="toggle-dark"
-                                    style="cursor: pointer" />
-                                <label class="form-check-label"></label>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20"
-                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="sidebar-toggler x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item active">
-                            <a href="index.html" class="sidebar-link">
-                                <i class="bi bi-list-task"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="index.html" class="sidebar-link">
-                                <i class="bi bi-stack"></i>
-                                <span>Daftar Pengaduan</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-people-fill"></i>
-                                <span>Daftar User</span>
-                            </a>
-
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <a href="component-accordion.html" class="submenu-link">Semua User</a>
-                                </li>
-
-                                <li class="submenu-item">
-                                    <a href="component-alert.html" class="submenu-link">Belum Terverifikasi</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="index.html" class="sidebar-link">
-                                <i class="bi bi-person-circle"></i>
-                                <span>Akun Saya</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="index.html" class="sidebar-link">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Keluar</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+  <div class="page-frame bg-pale-primary">
+    <div class="content-wrapper">
+      <header class="wrapper">
+        <nav class="navbar navbar-expand-lg classic transparent position-absolute navbar-dark">
+          <div class="container flex-lg-row flex-nowrap align-items-center">
+            <div class="navbar-brand w-100">
+              <a href="/">
+                <img class="logo-dark" src="{{ asset('/assets') }}/img/logo-dark.png" alt="" />
+                <img class="logo-light" src="{{ asset('/assets') }}/img/logo-light.png" alt="" />
+              </a>
             </div>
+            <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+              <div class="offcanvas-header d-lg-none">
+                <h3 class="text-white fs-30 mb-0">SMK OPKI</h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown dropdown-mega"><a class="nav-link" href="#beranda">Beranda</a></li>
+                  <li class="nav-item dropdown dropdown-mega"><a class="nav-link" href="#pengaduan">Pengaduan</a></li>
+                  <li class="nav-item dropdown dropdown-mega"><a class="nav-link" href="#alurpengaduan">Alur Pengaduan</a></li>
+                  <li class="nav-item dropdown dropdown-mega"><a class="nav-link" href="#kontak">Kontak</a></li>
+                </ul>
+                <!-- /.navbar-nav -->
+              </div>
+              <!-- /.offcanvas-body -->
+            </div>
+            <!-- /.navbar-collapse -->
+            <div class="navbar-other w-100 d-flex ms-auto">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item d-lg-none">
+                  <button class="hamburger offcanvas-nav-btn"><span></span></button>
+                </li>
+              </ul>
+              <!-- /.navbar-nav -->
+            </div>
+            <!-- /.navbar-other -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar -->
+      </header>
+      <!-- /header -->
+      <section class="video-wrapper bg-overlay bg-overlay-gradient px-0 mt-0 min-vh-80" id="beranda">
+        <video poster="{{ asset('/assets') }}/img/okky/bg.png" src="{{ asset('/assets') }}/img/okky/bg.png" autoplay loop playsinline muted style="opacity: 70%;"></video>
+        <div class="video-content">
+          <div class="container text-center">
+            <div class="row">
+              <div class="col-lg-8 col-xl-6 text-center text-white mx-auto">
+                <h1 class="display-1 fs-54 text-white mb-5"><span class="rotator-zoom">Pencurian, Kekerasan, Penggunaan Narkoba, Pelanggaran Disiplin, Pelecehan, Pelanggaran Hak Asasi, Sabotase, Pelanggaran Kesehatan dan Keselamatan Kerja, Penyalahgunaan Kekuasaan</span></h1>
+                <p class="lead fs-20 mb-0 mx-xxl-8">Segera Laporkan, Ciptakan Keamanan Bersama! <br> Melapor Adalah Langkah Pertama Menuju Lingkungan Aman dan Terlindungi.</p>
+              </div>
+              <!-- /column -->
+            </div>
+          </div>
+          <!-- /.video-content -->
         </div>
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
-            <div class="page-heading">
-                <h3>Dashboard</h3>
+        <!-- /.content-overlay -->
+      </section>
+      <!-- /section -->
+      <section class="wrapper bg-light" id="pengaduan">
+        <div class="container py-10 py-md-10">
+          <div class="row text-center mb-10">
+            <div class="col-md-10 col-lg-9 col-xxl-8 mx-auto">
+              <h2 class="fs-16 text-uppercase text-muted mb-3">Apa yang bisa diadukan ?</h2>
+              <h3 class="display-5 px-xl-10 mb-0">Semua yang terjadi di SMK OPKI Jawa Timur</h3>
             </div>
-            <div class="page-content">
-                <div class="row">
-                    <div class="col-12 col-lg-9">
-                        <section class="section">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">
-                                        Pengaduan Baru
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table" id="table1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>City</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="card">
-                            <div class="card-body py-4 px-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-xl">
-                                        <img src="{{ asset('/assets') }}/compiled/jpg/1.jpg" alt="Face 1" />
-                                    </div>
-                                    <div class="ms-3 name">
-                                        <h5 class="font-bold">John Duck</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>User Belum Terverifikasi</h4>
-                            </div>
-                            <div class="card-content pb-4">
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/4.jpg" />
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Hank Schrader</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/5.jpg" />
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Dean Winchester</h5>
-                                        <h6 class="text-muted mb-0">@imdean</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/1.jpg" />
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">John Dodol</h5>
-                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
-                                    </div>
-                                </div>
-                                <div class="px-4">
-                                    <button class="btn btn-block btn-xl btn-outline-primary font-bold mt-3">Start
-                                        Conversation</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- /column -->
+          </div>
+          <!-- Slider -->
+          <div class="container-fluid px-md-6">
+            <div class="swiper-container blog grid-view mb-17 mb-md-19" data-margin="30" data-nav="true" data-dots="true" data-items-xxl="3" data-items-md="2" data-items-xs="1">
+              <div class="swiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/pencurian.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/kekerasan.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/Penyalahgunaan Narkoba.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/Pelanggaran.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/Pelecehan.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/Sabotase.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
+                  <div class="swiper-slide">
+                    <figure class="rounded"><img src="{{ asset('/assets') }}/img/okky/lainnya.png" alt="" /></figure>
+                  </div>
+                  <!--/.swiper-slide -->
                 </div>
+                <!--/.swiper-wrapper -->
+              </div>
+              <!-- /.swiper -->
             </div>
-
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2023 &copy; Mazer</p>
+            <!-- /.swiper-container -->
+          </div>
+          <!-- Alur Pengaduan -->
+          <div class="container py-1 py-md-5" id="alurpengaduan">
+            <div class="row d-flex align-items-start gy-10 mb-18 mb-md-20">
+              <div class="col-lg-5 position-lg-sticky" style="top: 8rem;">
+                <h3 class="display-2 mb-5">Alur Pengaduan</h3>
+                <p class="mb-7">Berikut tahapan tahapan yang harus dilakukan</p>
+              </div>
+              <!-- /column -->
+              <div class="col-lg-6 ms-auto">
+                <div class="card bg-soft-fuchsia mb-6">
+                  <div class="card-body d-flex flex-row">
+                    <div>
+                      <img src="{{ asset('/assets') }}/img/icons/lineal/user.svg" class="svg-inject icon-svg icon-svg-md text-fuchsia me-5" alt="" />
                     </div>
-                    <div class="float-end">
-                        <p>
-                            Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span> by
-                            <a href="https://saugi.me">Saugi</a>
-                        </p>
+                    <div>
+                      <h3 class="fs-21 mb-2">Membuat Akun</h3>
+                      <p class="mb-0">Tahap pertama yaitu anda diharuskan memiliki akun untuk melakukan pengaduan.</p>
                     </div>
+                  </div>
+                  <!-- /.card-body -->
                 </div>
-            </footer>
+                <!-- /.card -->
+                <div class="card bg-soft-aqua mb-6">
+                  <div class="card-body d-flex flex-row">
+                    <div>
+                      <img src="{{ asset('/assets') }}/img/icons/lineal/login.svg" class="svg-inject icon-svg icon-svg-md text-aqua me-5" alt="" />
+                    </div>
+                    <div>
+                      <h3 class="fs-21 mb-2">Login</h3>
+                      <p class="mb-0">Jika sudah memiliki akun anda dapat melakukan login.</p>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card bg-soft-yellow mb-6">
+                  <div class="card-body d-flex flex-row">
+                    <div>
+                      <img src="{{ asset('/assets') }}/img/icons/lineal/smartphone.svg" class="svg-inject icon-svg icon-svg-md text-yellow me-5" alt="" />
+                    </div>
+                    <div>
+                      <h3 class="fs-21 mb-2">Membuat Pengaduan</h3>
+                      <p class="mb-0">Kemudian anda dapat langsung membuat pengaduan dengan mengisi form yang sudah ada.</p>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card bg-soft-leaf mb-6">
+                  <div class="card-body d-flex flex-row">
+                    <div>
+                      <img src="{{ asset('/assets') }}/img/icons/lineal/refresh.svg" class="svg-inject icon-svg icon-svg-md text-leaf me-5" alt="" />
+                    </div>
+                    <div>
+                      <h3 class="fs-21 mb-2">Pengaduan Diproses</h3>
+                      <p class="mb-0">Setelah membuat pengaduan, maka tinggal menunggu admin untuk memproses pengaduan anda.</p>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /column -->
+            </div>
+            <!-- /.row -->
+          </div>
         </div>
+        <!-- /.container -->
+      </section>
+      <!-- /section -->
+      <section class="wrapper bg-light">
+        <!-- /.container -->
+      </section>
+      <!-- /section -->
+      <section class="wrapper bg-light" id="kontak">
+        <div class="container py-15 py-md-17">
+          <div class="row gx-lg-8 gx-xl-12 gy-10 gy-lg-0">
+            <div class="row text-center mb-10">
+              <div class="col-md-10 col-lg-9 col-xxl-8 mx-auto">
+                <h3 class="display-5 px-xl-10 mb-0">Kontak Kami</h3>
+              </div>
+              <!-- /column -->
+            </div>
+              <div class="row gx-0">
+                <div class="col-lg-6 align-self-stretch">
+                  <div class="map map-full rounded-top rounded-lg-start">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8433.172184015291!2d112.70690310043642!3d-7.449520384904409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e17078a4a3d9%3A0x55c96f8adbde084c!2sGelora%20Delta%20Sidoarjo!5e0!3m2!1sen!2sid!4v1699977563080!5m2!1sen!2sid" style="width:100%; height: 100%; border:0" allowfullscreen></iframe>
+                  </div>
+                  <!-- /.map -->
+                </div>
+                <!--/column -->
+                <div class="col-lg-6">
+                  <div class="p-10 p-md-11 p-lg-14">
+                    <div class="d-flex flex-row">
+                      <div>
+                        <div class="icon text-primary fs-28 me-4 mt-n1"> <i class="uil uil-location-pin-alt"></i> </div>
+                      </div>
+                      <div class="align-self-start justify-content-start">
+                        <h5 class="mb-1">Address</h5>
+                        <address>Jalan Kenangan No. 17 <br class="d-none d-md-block" />Sidoarjo, Indonesia</address>
+                      </div>
+                    </div>
+                    <!--/div -->
+                    <div class="d-flex flex-row">
+                      <div>
+                        <div class="icon text-primary fs-28 me-4 mt-n1"> <i class="uil uil-phone-volume"></i> </div>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Phone</h5>
+                        <p>+62 81235678910 </p>
+                      </div>
+                    </div>
+                    <!--/div -->
+                    <div class="d-flex flex-row">
+                      <div>
+                        <div class="icon text-primary fs-28 me-4 mt-n1"> <i class="uil uil-envelope"></i> </div>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">E-mail</h5>
+                        <p class="mb-0"><a href="mailto:sandbox@email.com" class="link-body">admin@pengaduan.xyz</a></p>
+                      </div>
+                    </div>
+                    <!--/div -->
+                  </div>
+                  <!--/div -->
+                </div>
+                <!--/column -->
+              </div>
+              <!--/.row -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /section -->
+      <section class="wrapper bg-light">
+        <div class="container pt-15 pt-md-17">
+          <div class="row text-center mb-7">
+            <div class="col-lg-11 col-xl-10 col-xxl-9 mx-auto">
+              <h3 class="display-3 px-lg-12 px-xxl-14">Mari Bergabung</h3>
+            </div>
+            <!-- /column -->
+          </div>
+          <!-- /.row -->
+          <div class="row mb-6">
+            <div class="col-md-10 col-lg-9 col-xl-7 mx-auto">
+              <div class="row align-items-center counter-wrapper gy-4 gy-md-0">
+                <div class="col-md-6 text-center">
+                  <h3 class="counter counter-lg text-primary">{{ count($pengaduan) }}</h3>
+                  <p>Total Pengaduan</p>
+                </div>
+                <!--/column -->
+                <div class="col-md-6 text-center">
+                  <h3 class="counter counter-lg text-primary">{{ count($user) }}</h3>
+                  <p>Total User</p>
+                </div>
+                <!--/column -->
+              </div>
+              <!--/.row -->
+            </div>
+            <!-- /column -->
+          </div>
+          <!-- /.row -->
+          <figure><img src="{{ asset('/assets') }}/img/okky/image.png" alt="" /></figure>
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /section -->
     </div>
-    <script src="{{ asset('/assets') }}/static/js/components/dark.js"></script>
-    <script src="{{ asset('/assets') }}/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
-    <script src="{{ asset('/assets') }}/compiled/js/app.js"></script>
-
-    <script src="{{ asset('/assets') }}/extensions/jquery/jquery.min.js"></script>
-    <script src="{{ asset('/assets') }}/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('/assets') }}/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('/assets') }}/static/js/pages/datatables.js"></script>
+    <!-- /.content-wrapper -->
+    <footer>
+      <div class="container py-3">
+        <div class="d-md-flex align-items-center justify-content-between">
+          <p class="mb-2 mb-lg-0">© 2023 Sandbox. All rights reserved.</p>
+          <nav class="nav social social-muted mb-0 text-md-end">
+            
+          </nav>
+          <!-- /.social -->
+        </div>
+      </div>
+      <!-- /.container -->
+    </footer>
+  </div>
+  <!-- /.page-frame -->
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+  </div>
+  <script src="{{ asset('/assets') }}/js/plugins.js"></script>
+  <script src="{{ asset('/assets') }}/js/theme.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+       // Tambahkan event listener untuk setiap elemen <a> dengan href yang dimulai dengan #
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+             e.preventDefault();
+ 
+             const targetId = this.getAttribute('href').substring(1);
+             const targetElement = document.getElementById(targetId);
+ 
+             if (targetElement) {
+                window.scrollTo({
+                   top: targetElement.offsetTop,
+                   behavior: 'smooth'
+                });
+             }
+          });
+       });
+    });
+ </script>
+ 
 </body>
 
 </html>
