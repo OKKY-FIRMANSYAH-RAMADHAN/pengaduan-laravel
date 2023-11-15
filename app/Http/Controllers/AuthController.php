@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -63,70 +61,50 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => $validator->errors()
-            ])->header('Content-Type', 'application/json');
+            ]);
         } else {
-            $user = new User;
-            if ($request->file('identitas_user')) {
-                $identitas = $request->file('identitas_user');
-                $identitasName = Str::random(20) . '.' . $identitas->getClientOriginalExtension();
-                $identitas->move(public_path('assets/uploads/identitas'), $identitasName);
-                $user->identitas_user = $identitasName;
+            $usermodel = new User();
+            $user = $usermodel->insertData($request->all());
+            
+            if ($user) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Registrasi Berhasil! Silahkan Tunggu 1x24 Jam Untuk Menunggu Konfirmasi Dari Admin'
+                ]);
             }
-
-            $user->nama_user = $request->nama_user;
-            $user->username = $request->username;
-            $user->email_user = $request->email_user;
-            $user->foto_user = rand(1, 7) . '.jpg';
-            $user->password_user = Hash::make($request->password_user);
-            $user->save();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Registrasi Berhasil! Silahkan Tunggu 1x24 Jam Untuk Menunggu Konfirmasi Dari Admin'
-            ])->header('Content-Type', 'application/json');
         }
     }
 
     function login(Request $request)
     {
-        $user = User::where('email_user', $request->user)->orWhere('username', $request->user)->first();
-        if ($user) {
-            if ($user->role_user === 1) {
-                if (password_verify($request->password, $user->password_user)) {
-                    if ($user->status_user === 1) {
-                        session(['login.user' => true]);
-                        session(['id_user' => $user->id_user]);
-                        $status = 'success';
-                        $pesan = 'Login Berhasil.';
-                    } else {
-                        $status = 'error';
-                        $pesan = 'User Belum Aktif.';
-                    }
-                } else {
+        $userModel = new User();
+        $user = $userModel->authenticate($request->input('user'), $request->input('password'));
 
-                    $status = 'error';
-                    $pesan = 'Password salah.';
-                }
-            } else if ($user->role_user === 0) {
-                if (password_verify($request->password, $user->password_user)) {
+        if ($user) {
+            if ($user->status_user === 1) {
+                if ($user->role_user === 1) {
+                    session(['login.user' => true]);
+                } else if ($user->role_user === 0) {
                     session(['login.admin' => true]);
-                    session(['id_user' => $user->id_user]);
-                    $status = 'success';
-                    $pesan = 'Login Berhasil.';
-                } else {
-                    $status = 'error';
-                    $pesan = 'Password salah.';
                 }
+
+                session(['id_user' => $user->id_user]);
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => 'Login Berhasil.'
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => 'error',
+                    'message'   => 'User Belum Aktif.'
+                ]);
             }
         } else {
-            $status = 'error';
-            $pesan = 'Email / Username Tidak Ditemukan.';
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Email / Username Tidak Ditemukan atau Password Salah.'
+            ]);
         }
-
-        return response()->json([
-            'status'    => $status,
-            'message'   => $pesan
-        ])->header('Content-Type', 'application/json');
     }
 
     public function logout()

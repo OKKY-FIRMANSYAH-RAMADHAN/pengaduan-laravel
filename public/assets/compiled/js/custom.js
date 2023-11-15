@@ -1,9 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
+    var currentPath = window.location.pathname;
+
     // Fungsi Tanggal
     function formatTanggal(tanggalString) {
         const options = { day: "numeric", month: "long", year: "numeric" };
         const tanggal = new Date(tanggalString);
         return tanggal.toLocaleDateString("id-ID", options);
+    }
+
+    // Notif Sukses
+    function notifSukses(data) {
+        Swal.fire({
+            title: "Sukses!",
+            text: data.message,
+            icon: "success",
+            confirmButtonText: "OK",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        });
+    }
+
+    // Notif Error
+    function notifError(data) {
+        Swal.fire({
+            title: "Error!",
+            text: data.message,
+            icon: "error",
+            confirmButtonText: "OK",
+        });
     }
 
     // Membuat Pengaduan
@@ -18,16 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
             processData: false,
             success: function (data) {
                 if (data.status === "success") {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: data.message,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
+                    notifSukses(data);
+
                     $("#buatPengaduan").modal("hide");
                     const form = document.getElementById(
                         "form-tambah-pengaduan"
@@ -43,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Detail Pengaduan
     $(document).on("click", "#tombolDetail", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
 
         $.ajax({
             url: currentPath + "/detail/" + kode,
@@ -98,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hapus Pengaduan
     $(document).on("click", "#tombolHapus", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
 
         Swal.fire({
             title: "Yakin Ingin Menghapus Pengaduan ?",
@@ -117,23 +133,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     processData: false,
                     success: function (data) {
                         if (data.status === "success") {
-                            Swal.fire({
-                                title: "Sukses!",
-                                text: data.message,
-                                icon: "success",
-                                confirmButtonText: "OK",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload();
-                                }
-                            });
+                            notifSukses(data);
                         } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: data.message,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                            });
+                            notifError(data);
                         }
                     },
                 });
@@ -168,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tombol Reset
     $(document).on("click", "#tombolReset", function () {
         var token = document
             .querySelector('meta[name="csrf-token"]')
@@ -188,9 +191,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tombol Proses
     $(document).on("click", "#tombolProses", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
+
         Swal.fire({
             title: "Yakin Ingin Memproses ?",
             icon: "warning",
@@ -208,23 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     processData: false,
                     success: function (data) {
                         if (data.status === "success") {
-                            Swal.fire({
-                                title: "Sukses!",
-                                text: data.message,
-                                icon: "success",
-                                confirmButtonText: "OK",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload();
-                                }
-                            });
+                            notifSukses(data);
                         } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: data.message,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                            });
+                            notifError(data);
                         }
                     },
                 });
@@ -232,9 +222,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tombol Selesai
     $(document).on("click", "#tombolSelesai", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
+
         Swal.fire({
             title: "Yakin Ingin Menyelesaikan Pengaduan ?",
             icon: "warning",
@@ -252,23 +243,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     processData: false,
                     success: function (data) {
                         if (data.status === "success") {
-                            Swal.fire({
-                                title: "Sukses!",
-                                text: data.message,
-                                icon: "success",
-                                confirmButtonText: "OK",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload();
-                                }
-                            });
+                            notifSukses(data);
                         } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: data.message,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                            });
+                            notifError(data);
                         }
                     },
                 });
@@ -276,26 +253,31 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tampil Identitas
     $(document).on("click", "#viewIdentitas", function () {
         var data = $(this).attr("data-kode");
-        document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${data}`; 
+        document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${data}`;
         $("#modalIdentitas").modal("show");
     });
 
+    // Tampil Gambar
     $(document).on("click", "#tombolGambar", function () {
         var src = $(this).find("img").attr("src");
         $("#gambarDetail").attr("src", src);
         $("#modalViewImage").modal("show");
     });
 
+    // Tombol Ganti Password
     $(document).on("click", "#tombolGantiPassword", function () {
         $("#modalGantiPassword").modal("show");
     });
 
+    // Tombol Ganti Gambar
     $(document).on("click", "#gantiGambar", function () {
         $("#fileInput").click();
     });
 
+    // Proses Ubah Gambar
     $(document).on("change", "#fileInput", function (event) {
         var selectedFile = event.target.files[0];
         var reader = new FileReader();
@@ -315,29 +297,21 @@ document.addEventListener("DOMContentLoaded", function () {
             processData: false,
             success: function (data) {
                 if (data.status === "success") {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: data.message,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    });
-                }else{
-                    Swal.fire({
-                        title: "Error!",
-                        text: data.message,
-                        icon: "error",
-                        confirmButtonText: "OK",
-                    });
+                    notifSukses(data);
+                } else {
+                    notifError(data);
                 }
             },
         });
 
     });
 
+    // Tampilkan Modal Buat Pengaduan
     $(document).on("click", "#tombolBuat", function () {
         $("#buatPengaduan").modal("show");
     });
 
+    // View Gambar Tambah
     $(document).on("change", "#fotoMultiple", function (event) {
         var files = event.target.files;
         var maxFiles = 6;
@@ -373,6 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Submit Update User
     $(document).on("click", "#submitDetail", function (event) {
         event.preventDefault();
         var formData = new FormData($("#form-update-user")[0]);
@@ -384,21 +359,15 @@ document.addEventListener("DOMContentLoaded", function () {
             processData: false,
             success: function (data) {
                 if (data.status === "success") {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: data.message,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
+                    notifSukses(data);
+                } else {
+                    notifError(data);
                 }
             },
         });
     });
 
+    // Ganti Password
     $(document).on("click", "#submitChangePassword", function (event) {
         event.preventDefault();
         var formData = new FormData($("#form-ganti-password")[0]);
@@ -412,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.status === "success") {
                     Swal.fire({
                         title: "Sukses!",
-                        text: data.message, 
+                        text: data.message,
                         icon: "success",
                         confirmButtonText: "OK",
                     }).then((result) => {
@@ -424,22 +393,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             $("#modalGantiPassword").modal("hide");
                         }
                     });
-                    
+
                 }else{
-                    Swal.fire({
-                        title: "Error!",
-                        text: data.message,
-                        icon: "error",
-                        confirmButtonText: "OK",
-                    });
+                    notifError(data);
                 }
             },
         });
     });
 
+    // Tombol Modal Detail User
     $(document).on("click", "#btnDetailUser", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
         $("#detailUser").modal("show");
 
         $.ajax({
@@ -461,9 +425,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tombol Hapus User
     $(document).on("click", "#tombolHapusUser", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
 
         Swal.fire({
             title: "Yakin Ingin Menghapus User ?",
@@ -482,23 +446,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     processData: false,
                     success: function (data) {
                         if (data.status === "success") {
-                            Swal.fire({
-                                title: "Sukses!",
-                                text: data.message,
-                                icon: "success",
-                                confirmButtonText: "OK",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload();
-                                }
-                            });
+                            notifSukses(data);
                         } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: data.message,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                            });
+                            notifError(data);
                         }
                     },
                 });
@@ -506,9 +456,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Tombol Setujui User
     $(document).on("click", "#tombolSetujuUser", function () {
         var kode = $(this).attr("data-kode");
-        var currentPath = window.location.pathname;
+
         Swal.fire({
             title: "Yakin Ingin Menyetujui ?",
             icon: "warning",
@@ -526,23 +477,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     processData: false,
                     success: function (data) {
                         if (data.status === "success") {
-                            Swal.fire({
-                                title: "Sukses!",
-                                text: data.message,
-                                icon: "success",
-                                confirmButtonText: "OK",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload();
-                                }
-                            });
+                            notifSukses(data);
                         } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: data.message,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                            });
+                            notifError(data);
                         }
                     },
                 });

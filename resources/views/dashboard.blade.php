@@ -33,7 +33,7 @@
                                             <td><button class="btn btn-sm btn-primary mt-2 mt-lg-0 mt-md-0" data-kode="{{ $data['id_pengaduan'] }}"
                                                 id="tombolDetail">Detail</button>
                                                 <button class="btn btn-sm btn-warning mt-2 mt-lg-0 mt-md-0" data-kode="{{ $data['id_pengaduan'] }}" id="tombolProses">Proses</button>
-                                            </td>                                                
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -44,51 +44,73 @@
             </section>
             {{-- Detail --}}
             <div class="modal fade text-left w-100 none" id="detailPengaduan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel16" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <h4 class="modal-title white" id="myModalLabel16">Detail Pengaduan</h4>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <i data-feather="x"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Nama Pengadu</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6" id="detail_nama"></div>
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h4 class="modal-title white" id="myModalLabel16">Detail Pengaduan</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <i data-feather="x"></i>
+                            </button>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Status Pengaduan</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6" id="detail_status"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Tanggal Pengaduan</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6" id="detail_tanggal"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Perihal</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6" id="detail_perihal"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Rincian</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6" id="detail_rincian"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4 fw-bold">Foto Bukti</div>
-                            <div class="col-md-1 d-none d-md-block">:</div>
-                            <div class="col-md-6">
-                                <div class="row" id="imageContainerDetail"></div>
+                        <div class="modal-body">
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Nama Pengadu</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6" id="detail_nama"></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Status Pengaduan</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6" id="detail_status"></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Tanggal Pengaduan</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6" id="detail_tanggal"></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Perihal</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6" id="detail_perihal"></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Rincian</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6" id="detail_rincian"></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 fw-bold">Foto Bukti</div>
+                                <div class="col-md-1 d-none d-md-block">:</div>
+                                <div class="col-md-6">
+                                    <div class="row" id="imageContainerDetail"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {{-- View Image --}}
+            <div class="modal fade text-left w-100" id="modalViewImage" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel16" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title white" id="myModalLabel16"></h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <i data-feather="x"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mt-3 text-center">
+                                <div class="col-12">
+                                    <img id="gambarDetail" alt="Face 1" class="custom-img" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-12 col-lg-3">
             <div class="card">
@@ -99,7 +121,7 @@
                     @if (count($user_nonverif) === 0)
                         <div class="recent-message d-flex px-4 py-3">
                             <h5 class="text-center">Tidak Ada Data</h5>
-                        </div>              
+                        </div>
                     @endif
                     @foreach ($user_nonverif as $data)
                         <div class="recent-message d-flex px-4 py-3">
@@ -112,7 +134,7 @@
                             </div>
                         </div>
                     @endforeach
-                    
+
                     <div class="px-4">
                         <a class="btn btn-block btn-sm btn-outline-primary font-bold mt-3" href="">List Verifikasi</a>
                     </div>

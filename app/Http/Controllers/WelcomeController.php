@@ -11,6 +11,7 @@ class WelcomeController extends Controller
     function index(){
         $data['pengaduan'] = Pengaduan::all();
         $data['user'] = User::all();
+
         return view('welcome', $data);
     }
 }
