@@ -12,7 +12,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column">
                                     <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('/assets') }}/uploads/foto_user/{{$user->foto_user}}" alt="Avatar" id="gambarAwal">
+                                        <img src="{{ asset('storage') }}/foto_user/{{$user->foto_user}}" alt="Avatar" id="gambarAwal">
                                     </div>
                                     <form id="ubahGambar" enctype="multipart/form-data" method="POST">
                                         @csrf
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </section>
         </div>

@@ -1,0 +1,5 @@
+*
+!.gitignore
+!app/
+!app/public/
+!app/public/**

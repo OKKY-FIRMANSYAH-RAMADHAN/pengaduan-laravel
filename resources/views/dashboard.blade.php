@@ -126,7 +126,7 @@
                     @foreach ($user_nonverif as $data)
                         <div class="recent-message d-flex px-4 py-3">
                             <div class="avatar avatar-lg">
-                                <img src="{{ asset('assets') }}/uploads/foto_user/{{ $data['foto_user'] }}" />
+                                <img src="{{ asset('storage') }}/foto_user/{{ $data['foto_user'] }}" />
                             </div>
                             <div class="name ms-4">
                                 <h5 class="mb-1">{{ $data['nama_user'] }}</h5>
@@ -136,7 +136,7 @@
                     @endforeach
 
                     <div class="px-4">
-                        <a class="btn btn-block btn-sm btn-outline-primary font-bold mt-3" href="">List Verifikasi</a>
+                        <a class="btn btn-block btn-sm btn-outline-primary font-bold mt-3" href="/admin/user/nonverif">List Verifikasi</a>
                     </div>
                 </div>
             </div>

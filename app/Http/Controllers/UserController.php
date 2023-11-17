@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -61,12 +61,12 @@ class UserController extends Controller
             $randomFileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $foto_default = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg');
             if (!in_array($user['foto_user'], $foto_default)) {
-                File::delete('assets/uploads/foto_user/'.$user['foto_user']);
+                Storage::delete('public/foto_user/'.$user['foto_user']);
             }
-            
-            $file->move(public_path('assets/uploads/foto_user'), $randomFileName);
+
+            $file->storeAs('public/foto_user', $randomFileName);
             $user->foto_user = $randomFileName;
-            $user->save(); 
+            $user->save();
 
             if ($user) {
                 return response()->json([
@@ -79,9 +79,9 @@ class UserController extends Controller
                     'message' => 'Gambar Gagal Diubah'
                 ])->header('Content-Type', 'application/json');
             }
-            
+
         }
-        
+
     }
 
     public function gantiPassword(Request $request)
@@ -107,7 +107,7 @@ class UserController extends Controller
                 'message' => 'Password Lama Tidak Sesuai.'
             ];
         }
-        
+
         return response()->json($pesan)->header('Content-Type', 'application/json');
     }
 
@@ -157,9 +157,9 @@ class UserController extends Controller
         if ($user) {
             $foto_default = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg');
             if (!in_array($user['foto_user'], $foto_default)) {
-                File::delete('assets/uploads/foto_user/'.$user['foto_user']);
+                Storage::delete('public/foto_user/'.$user['foto_user']);
             }
-            File::delete('assets/uploads/identitas/'.$user['identitas_user']);
+            Storage::delete('public/identitas/'.$user['identitas_user']);
             User::destroy($id);
 
             return response()->json([

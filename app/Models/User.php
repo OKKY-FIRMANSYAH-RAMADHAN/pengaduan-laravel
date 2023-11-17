@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Model
 {
@@ -22,7 +23,7 @@ class User extends Model
         if (isset($requestData['identitas_user'])) {
             $identitas = $requestData['identitas_user'];
             $identitasName = Str::random(20) . '.' . $identitas->getClientOriginalExtension();
-            $identitas->move(public_path('assets/uploads/identitas'), $identitasName);
+            $identitas->storeAs('public/identitas', $identitasName);
             $user->identitas_user = $identitasName;
         }
 

@@ -6,8 +6,8 @@ use App\Models\Pengaduan;
 use App\Models\User;
 use App\Models\fotoPengaduan;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PengaduanController extends Controller
 {
@@ -40,7 +40,7 @@ class PengaduanController extends Controller
 
         foreach ($files as $file) {
             $randomFileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/uploads/bukti/' . $id_pengaduan . ''), $randomFileName);
+            $file->storeAs('public/bukti/'. $id_pengaduan, $randomFileName);
             $fotoPengaduan = new fotoPengaduan();
             $fotoPengaduan->id_pengaduan = $id_pengaduan;
             $fotoPengaduan->nama_foto = $randomFileName;
@@ -63,7 +63,7 @@ class PengaduanController extends Controller
 
     public function filterPengaduan(Request $request)
     {
-       
+
         if (session()->has('login.user')) {
             $pengaduanQuery = Pengaduan::where('id_pengadu', session('id_user'));
         }elseif (session()->has('login.admin')){
@@ -149,7 +149,7 @@ class PengaduanController extends Controller
     {
         $pengaduan = Pengaduan::find($id);
         if ($pengaduan) {
-            File::deleteDirectory(public_path('assets/uploads/bukti/' . $id));
+            Storage::deleteDirectory('public/bukti/'.$id);
             Pengaduan::destroy($id);
 
             return response()->json([

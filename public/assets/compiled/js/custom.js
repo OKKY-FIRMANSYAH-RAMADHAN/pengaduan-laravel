@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 imageContainer.empty();
 
                 for (var i = 0; i < dataGambar.length; i++) {
-                    var src = `${window.location.origin}/assets/uploads/bukti/${dataPengaduan["id_pengaduan"]}/${dataGambar[i]["nama_foto"]}`;
+                    var src = `${window.location.origin}/storage/bukti/${dataPengaduan["id_pengaduan"]}/${dataGambar[i]["nama_foto"]}`;
                     var img = $("<img>")
                         .addClass("p-1")
                         .attr("src", src)
@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Tampil Identitas
     $(document).on("click", "#viewIdentitas", function () {
         var data = $(this).attr("data-kode");
-        document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${data}`;
+        document.getElementById("fotoIdentitas").src = `${window.location.origin}/storage/identitas/${data}`;
         $("#modalIdentitas").modal("show");
     });
 
@@ -417,8 +417,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("nama_user").innerHTML = dataUser["nama_user"];
                 document.getElementById("username").innerHTML = dataUser["username"];
                 document.getElementById("email_user").innerHTML = dataUser["email_user"];
-                document.getElementById("fotoIdentitas").src = `${window.location.origin}/assets/uploads/identitas/${dataUser["identitas_user"]}`;
-                document.getElementById("fotoUser").src = `${window.location.origin}/assets/uploads/foto_user/${dataUser["foto_user"]}`;
+                document.getElementById("fotoIdentitas").src = `${window.location.origin}/storage/identitas/${dataUser["identitas_user"]}`;
+                document.getElementById("fotoUser").src = `${window.location.origin}/storage/foto_user/${dataUser["foto_user"]}`;
 
                 $("#detailUser").modal("show");
             },

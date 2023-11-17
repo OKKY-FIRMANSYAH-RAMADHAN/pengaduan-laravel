@@ -36,6 +36,13 @@ return [
             'throw' => false,
         ],
 
+        'hosting' => [
+            'driver' => 'local',
+            'root' => public_path() . '/../../pengaduan-laravel/assets/uploads',
+            'url' => env('APP_URL').'/assets/uploads',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
