@@ -14,7 +14,7 @@
 
     <link rel="stylesheet"
         href="{{ asset('/assets') }}/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-    
+
         @yield('css')
     <link rel="stylesheet" href="{{ asset('/assets') }}/extensions/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="{{ asset('/assets') }}/compiled/css/extra-component-sweetalert.css">
@@ -33,7 +33,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('/assets') }}/compiled/svg/logo.svg" alt="Logo"
+                            <a href=""><img src="{{ asset('/assets') }}/compiled/svg/logo.svg" alt="Logo"
                                     srcset="" /></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
@@ -111,7 +111,7 @@
                                     <i class="bi bi-person-circle"></i>
                                     <span>Akun Saya</span>
                                 </a>
-                            </li>    
+                            </li>
 
                         @elseif(session()->has('login.user'))
                             <li class="sidebar-item {{ Route::currentRouteName() === 'user.pengaduan' ? 'active' : '' }}">
@@ -126,7 +126,7 @@
                                     <i class="bi bi-person-circle"></i>
                                     <span>Akun Saya</span>
                                 </a>
-                            </li> 
+                            </li>
                         @endif
 
                         <li class="sidebar-item">
@@ -148,7 +148,7 @@
             <div class="page-heading">
                 <h3>{{ $judul }}</h3>
             </div>
-            
+
             @yield('content')
 
             <footer>
