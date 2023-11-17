@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("nama_user").innerHTML = dataUser["nama_user"];
                 document.getElementById("username").innerHTML = dataUser["username"];
                 document.getElementById("email_user").innerHTML = dataUser["email_user"];
-                document.getElementById("fotoIdentitas").src = `${window.location.origin}/storage/identitas/${dataUser["identitas_user"]}`;
+                document.getElementById("viewIdentitas").setAttribute('data-kode', dataUser['identitas_user']);
                 document.getElementById("fotoUser").src = `${window.location.origin}/storage/foto_user/${dataUser["foto_user"]}`;
 
                 $("#detailUser").modal("show");

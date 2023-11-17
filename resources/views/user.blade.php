@@ -17,7 +17,7 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>   
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="modal fade text-left w-100" id="modalIdentitas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel16" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
                     <div class="modal-content">
@@ -94,13 +94,13 @@
                         <div class="modal-body">
                             <div class="row mt-3 text-center">
                                 <div class="col-12">
-                                    <img src="{{ asset('/assets') }}/img/pararel.png" id="fotoIdentitas" alt="Face 1" width="400px" />
+                                    <img id="fotoIdentitas" alt="Face 1" width="400px" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
 </div>
