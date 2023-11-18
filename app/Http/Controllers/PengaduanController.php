@@ -40,7 +40,17 @@ class PengaduanController extends Controller
 
         foreach ($files as $file) {
             $randomFileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/bukti/'. $id_pengaduan, $randomFileName);
+            $path = 'public/bukti/'. $id_pengaduan;
+            $file->storeAs($path, $randomFileName);
+
+            // Mengatur permission pada folder yang baru dibuat
+            $folderPath = storage_path('app/'.$path);
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0755, true);
+            } else {
+                chmod($folderPath, 0755);
+            }
+
             $fotoPengaduan = new fotoPengaduan();
             $fotoPengaduan->id_pengaduan = $id_pengaduan;
             $fotoPengaduan->nama_foto = $randomFileName;
